@@ -41,7 +41,11 @@ post '/submit' do
   url = params['url']
   des = params['description']
 
-  save_article(url, title, des)
+  query = "
+  INSERT INTO articles (title, url, description, created_at)
+  VALUES ('#{title}', '#{url}', $$#{des}$$, now())"
+
+  fetch_data(query)
 
   redirect '/'
 end
